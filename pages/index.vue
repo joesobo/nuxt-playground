@@ -1,9 +1,13 @@
 <template>
-	<h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+	<div
+		class="my-4 flex flex-col items-center justify-center rounded border border-solid border-gray-300 p-4"
+	>
+		<h1 class="text-xl font-bold">Welcome Home!</h1>
+	</div>
 </template>
 
 <script setup lang="ts">
-
+definePageMeta({
+  layout: 'default'
+})
 </script>
