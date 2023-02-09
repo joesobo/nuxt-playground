@@ -37,7 +37,7 @@ module.exports = {
 	],
 	settings: {
 		tailwindcss: {
-			config: 'tailwind.config.js',
+			config: '.nuxt/tailwind.config.cjs',
 			cssFiles: [
 				'**/*.css',
 				'!**/node_modules',

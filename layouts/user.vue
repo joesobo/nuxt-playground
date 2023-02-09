@@ -1,14 +1,14 @@
 <template>
-	<defaultLayout>
+	<div class="mx-auto w-full max-w-3xl">
 		<nav
-			class="mx-auto flex h-10 w-full max-w-3xl items-center justify-between text-lg text-white"
+			class="flex h-10 w-full items-center justify-between text-lg text-white"
 		>
 			<Navigation />
 
 			<User />
 		</nav>
 		<slot />
-	</defaultLayout>
+	</div>
 </template>
 
 <script setup lang="ts">
