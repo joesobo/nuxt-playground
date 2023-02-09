@@ -19,6 +19,8 @@ module.exports = {
 	rules: {
 		'linebreak-style': ['error', 'unix'],
 		'vue/multi-word-component-names': 'off',
+		'zod/prefer-enum': 'error',
+		'zod/require-strict': 'error',
 		'prettier/prettier': [
 			'error',
 			{
@@ -31,6 +33,7 @@ module.exports = {
 	},
 	plugins: [
 		'vue',
+		'zod',
 		'@typescript-eslint',
 		'vuejs-accessibility',
 		'tailwindcss',

@@ -1,5 +1,6 @@
 module.exports = {
 	plugins: [
+		require('prettier-plugin-import-sort'),
 		require('prettier-plugin-vue'),
 		require('prettier-plugin-tailwindcss'), // MUST come last
 	],

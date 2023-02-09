@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { useMutation } from '@vue/apollo-composable'
-import { watch } from 'vue'
 
 import { LOGOUT_USER } from '../graphql/mutations/userMutations'
 import { GET_USER } from '../graphql/queries/userQueries'

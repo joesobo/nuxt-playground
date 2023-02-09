@@ -1,3 +1,4 @@
+*.config.mjs
 *.cjs
 .prettierrc.js
 node_modules
