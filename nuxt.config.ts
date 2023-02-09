@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     clients: {
       default: {
         httpEndpoint: "http://localhost:4000/graphql",
+        inMemoryCacheOptions: {
+          addTypename: false,
+        },
       },
     },
   },

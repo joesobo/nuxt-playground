@@ -8,6 +8,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default'
+  layout: 'user'
 })
 </script>
