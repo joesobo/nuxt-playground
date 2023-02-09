@@ -1,19 +1,32 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxtjs/apollo": "5.0.0-alpha.5",
-    "autoprefixer": "^10.4.13",
-    "nuxt": "^3.1.2",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.6",
-    "typescript": "^4.9.5",
-    "vue": "^3.2.47"
-  }
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"lint": "eslint --ext .js,.ts,.vue .",
+		"prettier": "prettier --write --plugin-search-dir=. .",
+		"style": "pnpm prettier && pnpm lint --fix"
+	},
+	"devDependencies": {
+		"@nuxtjs/apollo": "5.0.0-alpha.5",
+		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@typescript-eslint/parser": "^5.51.0",
+		"autoprefixer": "^10.4.13",
+		"eslint": "^8.33.0",
+		"eslint-config-prettier": "^8.6.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-tailwindcss": "^3.8.3",
+		"eslint-plugin-vuejs-accessibility": "^2.1.0",
+		"nuxt": "^3.1.2",
+		"postcss": "^8.4.21",
+		"prettier": "^2.8.4",
+		"prettier-plugin-tailwindcss": "^0.2.2",
+		"prettier-plugin-vue": "^1.0.9",
+		"tailwindcss": "^3.2.6",
+		"typescript": "^4.9.5",
+		"vue": "^3.2.47"
+	}
 }

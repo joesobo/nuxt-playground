@@ -1,15 +1,15 @@
 <template>
-  <div class="flex">
-    <p>
-      {{ user.email }}
-    </p>
-    <button
-      class="ml-4 rounded border border-white px-2"
-      @click="handleSignOut"
-    >
-      Sign Out
-    </button>
-  </div>
+	<div class="flex">
+		<p>
+			{{ user.email }}
+		</p>
+		<button
+			class="ml-4 rounded border border-white px-2"
+			@click="handleSignOut"
+		>
+			Sign Out
+		</button>
+	</div>
 </template>
 
 <script setup lang="ts">
