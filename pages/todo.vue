@@ -98,12 +98,11 @@
 </template>
 
 <script setup lang="ts">
-import { Button, TheCard as Card, Input } from 'flowbite-vue'
 import type { Todo } from '@prisma/client'
-
+import { Button, TheCard as Card, Input } from 'flowbite-vue'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
-import Textarea from '~/components/Textarea.vue'
 import Checkbox from '~/components/Checkbox.vue'
+import Textarea from '~/components/Textarea.vue'
 
 definePageMeta({
 	layout: 'user',

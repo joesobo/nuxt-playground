@@ -8,7 +8,10 @@
 		"postinstall": "nuxt prepare",
 		"lint": "eslint --ext .js,.ts,.vue .",
 		"prettier": "prettier --write --plugin-search-dir=. .",
-		"style": "pnpm prettier && pnpm lint --fix"
+		"style": "pnpm prettier && pnpm lint --fix",
+		"prisma:generate": "npx prisma generate",
+		"prisma:migrate": "npx prisma migrate dev",
+		"prisma:studio": "npx prisma studio"
 	},
 	"devDependencies": {
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
