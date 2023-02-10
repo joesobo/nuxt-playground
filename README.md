@@ -1,13 +1,13 @@
-Just a little Nuxt playground to connect up to trpc
+Just a little Nuxt playground to connect up to TRPC and Firebase
 
 Stack:
 
 - Nuxt
 - Vue
 - Tailwind
-- nuxt-trpc
+- TRPC (nuxt)
 - Firebase
 - Zod
 
 TODO:
-- prisma
+- supabase and prisma to replace firebase
