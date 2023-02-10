@@ -1,31 +1,28 @@
 <template>
 	<div class="flex flex-col">
-		<input
+		<Input
 			v-model="email"
 			type="text"
 			placeholder="email"
 			class="mt-4"
 			aria-label="Email"
 		/>
-		<input
+		<Input
 			v-model="password"
-			type="text"
+			type="password"
 			placeholder="password"
 			class="mt-4"
 			aria-label="Password"
 		/>
-		<p v-if="error" class="mt-4 text-sm text-gray-300">
+		<p v-if="error" class="mt-4 text-red-500">
 			{{ error }}
 		</p>
 		<div>
-			<button
-				class="mt-4 rounded border border-white p-2 text-white"
-				@click="login"
-			>
-				Login
-			</button>
+			<Button class="mt-4" gradient="cyan-blue" @click="login"> Login </Button>
 		</div>
-		<a href="/register" class="mt-4 text-sm text-gray-300"
+		<a
+			href="/register"
+			class="mt-4 text-sm text-gray-300 no-underline hover:underline"
 			>Don't have an account? Register here</a
 		>
 	</div>
@@ -33,6 +30,7 @@
 
 <script setup lang="ts">
 import { useMutation } from '@vue/apollo-composable'
+import { Button, Input } from 'flowbite-vue'
 import { ref } from 'vue'
 
 import { LOGIN_USER } from '../graphql/mutations/userMutations'

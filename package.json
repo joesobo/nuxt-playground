@@ -25,6 +25,7 @@
 		"eslint-plugin-tailwindcss": "^3.8.3",
 		"eslint-plugin-vuejs-accessibility": "^2.1.0",
 		"eslint-plugin-zod": "^1.4.0",
+		"flowbite-typography": "^1.0.3",
 		"import-sort-style-module": "^6.0.0",
 		"nuxt": "^3.2.0",
 		"nuxt-icon": "^0.2.11",
@@ -41,6 +42,8 @@
 		"webpack": "^5.75.0"
 	},
 	"dependencies": {
+		"flowbite": "^1.6.3",
+		"flowbite-vue": "^0.0.10",
 		"zod": "^3.20.6"
 	},
 	"importSort": {

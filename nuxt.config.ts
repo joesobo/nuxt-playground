@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 		'nuxt-vitest',
 		'@vueuse/nuxt',
 	],
-	css: ['~/assets/css/main.css'],
+	css: ['~/assets/css/tailwind.css'],
 	postcss: {
 		plugins: {
 			tailwindcss: {},

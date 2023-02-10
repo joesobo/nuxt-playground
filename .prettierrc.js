@@ -5,7 +5,7 @@ module.exports = {
 		require('prettier-plugin-tailwindcss'), // MUST come last
 	],
 	pluginSearchDirs: false,
-	tailwindConfig: './.nuxt/tailwind.config.cjs',
+	tailwindConfig: './tailwind.config.js',
 	trailingComma: 'es5',
 	semi: false,
 	singleQuote: true,

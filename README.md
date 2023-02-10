@@ -7,3 +7,4 @@ Stack:
 - Tailwind
 - Apollo/Graphql
 - Firebase
+- Zod

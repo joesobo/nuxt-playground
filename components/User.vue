@@ -1,19 +1,17 @@
 <template>
-	<div class="flex">
-		<p>
-			{{ user.email }}
+	<div class="mt-2 flex items-center">
+		<p class="m-0">
+			{{ user?.email ?? 'Error' }}
 		</p>
-		<button
-			class="ml-4 rounded border border-white px-2"
-			@click="handleSignOut"
-		>
+		<Button class="ml-2" gradient="red-yellow" @click="handleSignOut">
 			Sign Out
-		</button>
+		</Button>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { useMutation } from '@vue/apollo-composable'
+import { Button } from 'flowbite-vue'
 
 import { LOGOUT_USER } from '../graphql/mutations/userMutations'
 import { GET_USER } from '../graphql/queries/userQueries'

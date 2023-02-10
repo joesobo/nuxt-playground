@@ -1,11 +1,11 @@
 <template>
 	<!-- Form -->
-	<div class="flex flex-col">
+	<div class="format mt-4 flex flex-col">
 		<div class="flex">
 			<!-- Name -->
-			<input
+			<Input
 				v-model="todoTitle"
-				class="w-full rounded-md border border-solid border-zinc-600 p-2"
+				class="w-full"
 				aria-label="New Todo Title"
 				placeholder="Todo Title"
 			/>
@@ -17,38 +17,32 @@
 				aria-label="New Todo Color"
 			/>
 			<!-- Todo State -->
-			<input
-				v-model="todoChecked"
-				class="ml-2 w-6"
-				type="checkbox"
-				aria-label="New Todo Checkbox"
-			/>
+			<Checkbox v-model="todoChecked" class="ml-2" label="New Todo Checkbox" />
 		</div>
 		<!-- Description -->
-		<textarea
+		<Textarea
 			v-model="todoDescription"
-			class="mt-2 rounded-md p-2"
+			class="mt-2"
 			placeholder="Add a description"
+			label="New Todo Description"
 			aria-label="New Todo Description"
 		/>
 		<p v-if="error" class="mt-2 font-bold text-red-500">
 			{{ error }}
 		</p>
 		<div class="mt-2 flex">
-			<button class="rounded bg-zinc-300 px-4 py-2" @click="addTodo">
-				Add
-			</button>
-			<button class="ml-2 rounded bg-zinc-300 px-4 py-2" @click="resetForm">
+			<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
+			<Button gradient="purple-pink" outline class="ml-2" @click="resetForm">
 				Clear
-			</button>
+			</Button>
 		</div>
 
 		<!-- Display -->
 		<ul class="mt-8 flex flex-col">
-			<li
+			<Card
 				v-for="todo in todos"
 				:key="todo.id"
-				class="mr-2 mt-2 flex flex-col rounded border border-solid border-zinc-500 p-4"
+				class="mt-4 w-full max-w-full"
 				:class="
 					pickTextColorBasedOnBgColorAdvanced(
 						todo.color,
@@ -60,15 +54,14 @@
 			>
 				<div class="flex justify-between">
 					<div class="flex">
-						<input
+						<Checkbox
 							v-model="todo.completed"
-							type="checkbox"
-							aria-label="Todo Checkbox"
+							label="Todo Checkbox"
 							@change="updateTodo(todo)"
 						/>
-						<input
+						<Input
 							v-model="todo.title"
-							class="ml-2 bg-transparent"
+							class="ml-2 bg-transparent dark:bg-transparent"
 							aria-label="Todo Title"
 							@change="updateTodo(todo)"
 						/>
@@ -77,9 +70,9 @@
 				</div>
 
 				<div>
-					<input
+					<Input
 						v-model="todo.description"
-						class="mt-2 bg-transparent text-sm"
+						class="mt-2 bg-transparent text-sm dark:bg-transparent"
 						:class="
 							pickTextColorBasedOnBgColorAdvanced(
 								todo.color,
@@ -91,13 +84,14 @@
 						@change="updateTodo(todo)"
 					/>
 				</div>
-			</li>
+			</Card>
 		</ul>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { useMutation } from '@vue/apollo-composable'
+import { Button, TheCard as Card, Input } from 'flowbite-vue'
 
 import {
 	ADD_TODO,
@@ -107,6 +101,8 @@ import {
 import { GET_TODOS } from '../graphql/queries/todoQueries'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
 import { Todo, todoSchema, validateTodos } from '../utils/todoTypes'
+import Textarea from '~/components/Textarea.vue'
+import Checkbox from '~/components/Checkbox.vue'
 
 definePageMeta({
 	layout: 'user',
@@ -123,7 +119,6 @@ const storeTodo: Ref<Todo | undefined> = ref(undefined)
 // Fetching Data
 const { data } = await useAsyncQuery(GET_TODOS)
 const todos = validateTodos(data.value?.todosGQL)
-console.log(todos)
 const { mutate: addTodoGQL } = useMutation(ADD_TODO, () => ({
 	variables: {
 		title: todoTitle.value,
