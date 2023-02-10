@@ -1,7 +1,7 @@
 <template>
 	<div class="flex items-center">
 		<input
-			id="default-checkbox"
+			:id="`default-checkbox-${label}`"
 			v-model="model"
 			type="checkbox"
 			:aria-label="label"

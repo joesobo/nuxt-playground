@@ -39,7 +39,7 @@
 		</div>
 
 		<!-- Display -->
-		<ul class="mt-8 flex flex-col pl-0">
+		<div class="mt-8 flex flex-col pl-0">
 			<Card
 				v-for="todo in todos"
 				:key="todo.id"
@@ -57,7 +57,7 @@
 					<div class="flex">
 						<Checkbox
 							v-model="todo.completed"
-							label="Todo Checkbox"
+							:label="`Todo Checkbox ${todo.id}`"
 							@change="updateTodo(todo)"
 						/>
 						<Input
@@ -93,7 +93,7 @@
 					/>
 				</div>
 			</Card>
-		</ul>
+		</div>
 	</div>
 </template>
 
