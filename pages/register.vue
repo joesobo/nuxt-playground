@@ -27,33 +27,27 @@
 </template>
 
 <script setup lang="ts">
-import { useMutation } from '@vue/apollo-composable'
 import { Button, Input } from 'flowbite-vue'
 import { ref } from 'vue'
 
-import { ADD_USER } from '../graphql/mutations/userMutations'
+const { $client } = useNuxtApp()
 
 const email = ref('')
 const password = ref('')
 const error = ref()
 
-const { mutate: registerGQL } = useMutation(ADD_USER, () => ({
-	variables: {
+const register = async () => {
+	const result = await $client.createUser.mutate({
 		email: email.value,
 		password: password.value,
-	},
-}))
+	})
 
-const register = async () => {
-	const result = await registerGQL()
-	const data = result?.data.register
-
-	if (data.status === '200') {
-		console.log('SUCCESS: ', data.message)
+	if (result.status === 200) {
+		console.log('SUCCESS: ', result.message)
 		window.location.href = '/'
 	} else {
-		console.log('ERROR: ', data.message)
-		switch (data.message) {
+		console.log('ERROR: ', result.message)
+		switch (result.message) {
 			case 'auth/invalid-email':
 				error.value = 'Invalid email'
 				break

@@ -1,10 +1,9 @@
-import { GET_USER } from '../graphql/queries/userQueries'
-
 export default defineNuxtRouteMiddleware(async () => {
-	const { data } = await useAsyncQuery(GET_USER)
-	const user = computed(() => data.value?.getUser)
+	const { $client } = useNuxtApp()
 
-	if (user.value.status === '400') {
+	const { data: user } = await $client.getUser.useQuery()
+
+	if (user.value?.status === 400) {
 		if (typeof window !== 'undefined') {
 			alert('You are not logged in. Please log in to continue.')
 			window.location.href = '/login'

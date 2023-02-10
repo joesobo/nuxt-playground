@@ -11,28 +11,13 @@ export default defineNuxtConfig({
 			meta: [{ name: 'description', content: 'My Nuxt playground.' }],
 		},
 	},
-	modules: [
-		'@nuxtjs/apollo',
-		'@nuxtjs/tailwindcss',
-		'nuxt-icon',
-		'nuxt-vitest',
-		'@vueuse/nuxt',
-	],
+	build: { transpile: ['trpc-nuxt'] },
+	modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', 'nuxt-vitest', '@vueuse/nuxt'],
 	css: ['~/assets/css/tailwind.css'],
 	postcss: {
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {},
-		},
-	},
-	apollo: {
-		clients: {
-			default: {
-				httpEndpoint: 'http://localhost:4000/graphql',
-				inMemoryCacheOptions: {
-					addTypename: false,
-				},
-			},
 		},
 	},
 })

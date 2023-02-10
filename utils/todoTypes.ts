@@ -31,22 +31,3 @@ export const todoInputSchema = todoSchema.extend({
 })
 
 export type Todo = z.infer<typeof todoInputSchema>
-
-export const validateTodos = (datum: unknown[]) => {
-	if (!datum) return []
-
-	const validTodos: Todo[] = []
-
-	datum.forEach((data: unknown) => {
-		const parse = todoInputSchema.safeParse(data)
-
-		if (parse.success) {
-			validTodos.push({ ...parse.data, color: parse.data.color || '#000' })
-		} else {
-			parse.error.issues.forEach((issue) => {
-				console.log(issue)
-			})
-		}
-	})
-	return validTodos
-}

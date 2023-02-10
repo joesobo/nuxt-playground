@@ -1,10 +1,13 @@
-Just a little Nuxt playground to connect up to the backend server over in my full-stack-learning repo
+Just a little Nuxt playground to connect up to trpc
 
 Stack:
 
 - Nuxt
 - Vue
 - Tailwind
-- Apollo/Graphql
+- nuxt-trpc
 - Firebase
 - Zod
+
+TODO:
+- prisma

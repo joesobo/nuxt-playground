@@ -98,17 +98,10 @@
 </template>
 
 <script setup lang="ts">
-import { useMutation } from '@vue/apollo-composable'
 import { Button, TheCard as Card, Input } from 'flowbite-vue'
 
-import {
-	ADD_TODO,
-	DELETE_TODO,
-	UPDATE_TODO,
-} from '../graphql/mutations/todoMutations'
-import { GET_TODOS } from '../graphql/queries/todoQueries'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
-import { Todo, todoSchema, validateTodos } from '../utils/todoTypes'
+import { Todo, todoSchema } from '../utils/todoTypes'
 import Textarea from '~/components/Textarea.vue'
 import Checkbox from '~/components/Checkbox.vue'
 
@@ -125,32 +118,9 @@ const todoChecked = ref(false)
 const error: Ref<string | undefined> = ref(undefined)
 const storeTodo: Ref<Todo | undefined> = ref(undefined)
 
+const { $client } = useNuxtApp()
 // Fetching Data
-const { data, refresh } = await useAsyncQuery(GET_TODOS)
-
-const todos = computed(() => validateTodos(data.value?.todosGQL))
-
-const { mutate: addTodoGQL } = useMutation(ADD_TODO, () => ({
-	variables: {
-		title: todoTitle.value,
-		description: todoDescription.value,
-		completed: todoChecked.value,
-		color: todoColor.value,
-	},
-	update: () => {
-		refresh()
-	},
-}))
-const { mutate: updateTodoGQL } = useMutation(UPDATE_TODO, () => ({
-	update: () => {
-		refresh()
-	},
-}))
-const { mutate: deleteTodoGQL } = useMutation(DELETE_TODO, () => ({
-	update: () => {
-		refresh()
-	},
-}))
+const { data: todos, refresh } = await $client.getTodos.useQuery()
 
 // Validate Input
 watch([todoTitle, todoDescription, todoChecked, todoColor], () => {
@@ -185,28 +155,36 @@ watch([todoTitle, todoDescription, todoChecked, todoColor], () => {
 // Creating Data
 const addTodo = async () => {
 	if (!error.value) {
-		await addTodoGQL()
+		await $client.addTodo.mutate({
+			title: todoTitle.value,
+			description: todoDescription.value,
+			completed: todoChecked.value,
+			color: todoColor.value,
+		})
+		refresh()
 	}
 }
 
 // Updating Data
 const updateTodo = async (todo: Todo) => {
 	storeTodo.value = todo
-	await updateTodoGQL({
+	await $client.updateTodo.mutate({
 		id: todo.id,
 		title: todo.title,
 		description: todo.description,
 		completed: todo.completed,
 		color: todo.color,
 	})
+	refresh()
 }
 
 // Deleting Data
 const removeTodo = async (todo: Todo) => {
 	storeTodo.value = todo
-	await deleteTodoGQL({
+	await $client.deleteTodo.mutate({
 		id: todo.id,
 	})
+	refresh()
 }
 
 // Reset Form
