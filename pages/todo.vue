@@ -1,6 +1,7 @@
 <template>
 	<!-- Form -->
-	<div class="format mt-4 flex flex-col">
+	<div class="flex flex-col">
+		<h1>Todo List</h1>
 		<div class="flex">
 			<!-- Name -->
 			<Input
@@ -38,7 +39,7 @@
 		</div>
 
 		<!-- Display -->
-		<ul class="mt-8 flex flex-col">
+		<ul class="mt-8 flex flex-col pl-0">
 			<Card
 				v-for="todo in todos"
 				:key="todo.id"
@@ -46,8 +47,8 @@
 				:class="
 					pickTextColorBasedOnBgColorAdvanced(
 						todo.color,
-						'text-white',
-						'text-black'
+						'!dark:text-white !text-white',
+						'!dark:text-black !text-black'
 					)
 				"
 				:style="`background-color: ${todo.color}`"
@@ -62,6 +63,13 @@
 						<Input
 							v-model="todo.title"
 							class="ml-2 bg-transparent dark:bg-transparent"
+							:class="
+								pickTextColorBasedOnBgColorAdvanced(
+									todo.color,
+									'!dark:text-gray-300 !text-gray-300',
+									'!dark:text-gray-700 !text-gray-700'
+								)
+							"
 							aria-label="Todo Title"
 							@change="updateTodo(todo)"
 						/>
@@ -76,8 +84,8 @@
 						:class="
 							pickTextColorBasedOnBgColorAdvanced(
 								todo.color,
-								'text-gray-300',
-								'text-gray-700'
+								'!dark:text-gray-300 !text-gray-300',
+								'!dark:text-gray-700 !text-gray-700'
 							)
 						"
 						aria-label="Todo Description"
@@ -106,6 +114,7 @@ import Checkbox from '~/components/Checkbox.vue'
 
 definePageMeta({
 	layout: 'user',
+	middleware: ['auth'],
 })
 
 // Vue var setup
@@ -117,8 +126,10 @@ const error: Ref<string | undefined> = ref(undefined)
 const storeTodo: Ref<Todo | undefined> = ref(undefined)
 
 // Fetching Data
-const { data } = await useAsyncQuery(GET_TODOS)
-const todos = validateTodos(data.value?.todosGQL)
+const { data, refresh } = await useAsyncQuery(GET_TODOS)
+
+const todos = computed(() => validateTodos(data.value?.todosGQL))
+
 const { mutate: addTodoGQL } = useMutation(ADD_TODO, () => ({
 	variables: {
 		title: todoTitle.value,
@@ -126,33 +137,18 @@ const { mutate: addTodoGQL } = useMutation(ADD_TODO, () => ({
 		completed: todoChecked.value,
 		color: todoColor.value,
 	},
-	refetchQueries: [{ query: GET_TODOS }, 'getTodosGQL'],
+	update: () => {
+		refresh()
+	},
 }))
 const { mutate: updateTodoGQL } = useMutation(UPDATE_TODO, () => ({
-	update: (store) => {
-		const data = store.readQuery({ query: GET_TODOS }) as { todosGQL: Todo[] }
-		const updatedData = data.todosGQL.map((todo) => {
-			if (todo.id === storeTodo.value?.id) {
-				return {
-					...todo,
-					title: storeTodo.value?.title,
-					description: storeTodo.value?.description,
-					completed: storeTodo.value?.completed,
-					color: storeTodo.value?.color,
-				}
-			}
-			return todo
-		})
-		store.writeQuery({ query: GET_TODOS, data: { todosGQL: updatedData } })
+	update: () => {
+		refresh()
 	},
 }))
 const { mutate: deleteTodoGQL } = useMutation(DELETE_TODO, () => ({
-	update: (cache) => {
-		const data = cache.readQuery({ query: GET_TODOS }) as { todosGQL: Todo[] }
-		const updatedData = data.todosGQL.filter(
-			(w) => w.id !== storeTodo.value?.id
-		)
-		cache.writeQuery({ query: GET_TODOS, data: { todosGQL: updatedData } })
+	update: () => {
+		refresh()
 	},
 }))
 

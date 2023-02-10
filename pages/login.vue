@@ -1,12 +1,7 @@
 <template>
 	<div class="flex flex-col">
-		<Input
-			v-model="email"
-			type="text"
-			placeholder="email"
-			class="mt-4"
-			aria-label="Email"
-		/>
+		<h1>Login</h1>
+		<Input v-model="email" type="text" placeholder="email" aria-label="Email" />
 		<Input
 			v-model="password"
 			type="password"
