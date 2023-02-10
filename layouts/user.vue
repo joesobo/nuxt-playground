@@ -5,7 +5,7 @@
 		>
 			<Navigation />
 
-			<User />
+			<User v-if="canDisplayUser" />
 		</nav>
 		<slot />
 	</div>
@@ -13,4 +13,8 @@
 
 <script setup lang="ts">
 import User from '~/components/User.vue'
+
+const canDisplayUser = computed(() => {
+	return typeof window !== 'undefined'
+})
 </script>

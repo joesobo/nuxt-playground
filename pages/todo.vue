@@ -28,9 +28,9 @@
 			label="New Todo Description"
 			aria-label="New Todo Description"
 		/>
-		<p v-if="error" class="mt-2 font-bold text-red-500">
+		<!-- <p v-if="error" class="mt-2 font-bold text-red-500">
 			{{ error }}
-		</p>
+		</p> -->
 		<div class="mt-2 flex">
 			<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
 			<Button gradient="purple-pink" outline class="ml-2" @click="resetForm">
@@ -99,9 +99,9 @@
 
 <script setup lang="ts">
 import { Button, TheCard as Card, Input } from 'flowbite-vue'
+import type { Todo } from '@prisma/client'
 
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
-import { Todo, todoSchema } from '../utils/todoTypes'
 import Textarea from '~/components/Textarea.vue'
 import Checkbox from '~/components/Checkbox.vue'
 
@@ -115,54 +115,21 @@ const todoTitle = ref('')
 const todoDescription = ref('')
 const todoColor = ref('#000')
 const todoChecked = ref(false)
-const error: Ref<string | undefined> = ref(undefined)
 const storeTodo: Ref<Todo | undefined> = ref(undefined)
 
 const { $client } = useNuxtApp()
 // Fetching Data
 const { data: todos, refresh } = await $client.getTodos.useQuery()
 
-// Validate Input
-watch([todoTitle, todoDescription, todoChecked, todoColor], () => {
-	const todo = {
+// Creating Data
+const addTodo = async () => {
+	await $client.addTodo.mutate({
 		title: todoTitle.value,
 		description: todoDescription.value,
 		completed: todoChecked.value,
 		color: todoColor.value,
-	}
-
-	// Validate Data
-	const parse = todoSchema.safeParse(todo)
-
-	if (parse.success) {
-		error.value = undefined
-	} else {
-		const issue = parse.error.issues[0]
-
-		if (
-			issue?.code === 'too_small' ||
-			issue?.code === 'too_big' ||
-			issue?.code === 'invalid_string'
-		) {
-			error.value = `${issue.path[0]}: ${issue.message}`
-			return
-		}
-
-		error.value = JSON.stringify(parse.error.issues[0])
-	}
-})
-
-// Creating Data
-const addTodo = async () => {
-	if (!error.value) {
-		await $client.addTodo.mutate({
-			title: todoTitle.value,
-			description: todoDescription.value,
-			completed: todoChecked.value,
-			color: todoColor.value,
-		})
-		refresh()
-	}
+	})
+	refresh()
 }
 
 // Updating Data
@@ -171,9 +138,9 @@ const updateTodo = async (todo: Todo) => {
 	await $client.updateTodo.mutate({
 		id: todo.id,
 		title: todo.title,
-		description: todo.description,
+		description: todo.description || '',
+		color: todo.color || '#000',
 		completed: todo.completed,
-		color: todo.color,
 	})
 	refresh()
 }
@@ -193,7 +160,5 @@ const resetForm = () => {
 	todoDescription.value = ''
 	todoChecked.value = false
 	todoColor.value = '#000'
-
-	error.value = undefined
 }
 </script>

@@ -1,9 +1,11 @@
 import { inferAsyncReturnType } from '@trpc/server'
 
-/**
- * Creates context for an incoming request
- * @link https://trpc.io/docs/context
- */
-export const createContext = () => {}
+import { prisma } from '../prisma'
+
+export const createContext = () => {
+	return {
+		prisma,
+	}
+}
 
 export type Context = inferAsyncReturnType<typeof createContext>

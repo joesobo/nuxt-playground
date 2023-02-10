@@ -13,15 +13,18 @@
 import { Button } from 'flowbite-vue'
 
 const { $client } = useNuxtApp()
+const currentEmail = window.localStorage.email
 
-const { data: user, refresh } = await $client.getUser.useQuery()
+const { data: user, refresh } = await $client.getUser.useQuery({
+	email: currentEmail,
+})
 
 const handleSignOut = async () => {
-	const result = await $client.logoutUser.mutate()
+	const result = await $client.logoutUser.mutate({ email: currentEmail })
 	refresh()
 
 	if (result.status === 200) {
-		window.localStorage.removeItem('currentUser')
+		window.localStorage.removeItem('email')
 		window.location.href = '/login'
 	}
 }

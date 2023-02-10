@@ -1,4 +1,4 @@
-Just a little Nuxt playground to connect up to TRPC and Firebase
+Just a little Nuxt playground to connect up to TRPC, Supabase, and Prisma
 
 Stack:
 
@@ -9,8 +9,10 @@ Stack:
 - Vue
 - Tailwind / Flowbite
 - TRPC (nuxt)
-- Firebase
+- Supabase
+- Prisma
 - Zod
 
 TODO:
-- supabase and prisma to replace firebase
+- Reenable SSR
+- Authenticate properly with prisma (use tokens / JWT?)

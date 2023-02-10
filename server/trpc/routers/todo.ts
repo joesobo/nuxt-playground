@@ -1,83 +1,106 @@
-import {
-	addDoc,
-	collection,
-	deleteDoc,
-	doc,
-	getDoc,
-	getDocs,
-	query,
-	updateDoc,
-} from 'firebase/firestore'
+import type { Todo } from '@prisma/client'
 import { z } from 'zod'
-
-import { Todo, todoInputSchema, todoSchema } from '../../../utils/todoTypes'
-import { db } from './../../firebase'
 import { publicProcedure } from '~/server/trpc/trpc'
+import { ValidatePrisma } from '~/server/utils/validatePrisma'
+
+type TodoInput = Omit<Todo, 'id'>
+
+export const todoSchema = z
+	.object({
+		title: z
+			.string({
+				required_error: 'Title is required',
+				invalid_type_error: 'Title must be at least 3 characters',
+			})
+			.min(3),
+		description: z.string().max(50).nullable(),
+		color: z
+			.union([
+				z.string().startsWith('#').length(4),
+				z.string().startsWith('#').length(7),
+			])
+			.nullable(),
+		completed: z.boolean(),
+	})
+	.strict()
+
+export const fullTodoSchema = todoSchema.extend({
+	id: z.number(),
+	color: z.union([
+		z.string().startsWith('#').length(4),
+		z.string().startsWith('#').length(7),
+	]),
+	description: z.string().max(50),
+})
+
+type FullTodo = z.infer<typeof fullTodoSchema>
 
 export const todoRoutes = {
 	getTodo: publicProcedure
 		.input(
 			z
 				.object({
-					id: z.string(),
+					id: z.number(),
 				})
 				.strict()
 		)
-		.query(async ({ input }) => {
-			const todo = await getDoc(doc(db, 'todos', input.id))
-			return { id: todo.id, ...todo.data() }
+		.query(async (req) => {
+			const todo = await req.ctx.prisma.todo.findFirst({
+				where: {
+					id: req.input.id,
+				},
+			})
+
+			return {
+				id: todo?.id,
+				...todo,
+			} as Todo
 		}),
-	getTodos: publicProcedure.query(async () => {
-		const todos: Todo[] = []
+	getTodos: publicProcedure.query(async (req) => {
+		const todos: FullTodo[] = []
 
-		const todosQuery = query(collection(db, 'todos'))
-		const todosSnapshot = await getDocs(todosQuery)
+		const result = await req.ctx.prisma.todo.findMany()
 
-		todosSnapshot.forEach((doc) => {
-			const parse = todoSchema.safeParse(doc.data())
-
-			if (parse.success) {
-				todos.push({
-					id: doc.id,
-					...parse.data,
-					description: parse.data.description || '',
-					color: parse.data.color || '#000',
-				})
-			} else {
-				parse.error.issues.forEach((issue) => {
-					console.log(issue)
-				})
-			}
+		result.forEach((todo) => {
+			todos.push({
+				...todo,
+				color: todo.color || '#000',
+				description: todo.description || '',
+			})
 		})
+
 		return todos
 	}),
-	addTodo: publicProcedure.input(todoSchema).mutation(async ({ input }) => {
-		try {
-			const docRef = await addDoc(collection(db, 'todos'), input)
-			console.log('Document written with ID: ', docRef.id)
-		} catch (e) {
-			console.error('Error adding document: ', e)
-		}
-	}),
+	addTodo: publicProcedure
+		.input(todoSchema.strict() satisfies z.Schema<TodoInput>)
+		.mutation(async (req) => {
+			await req.ctx.prisma.todo.create<ValidatePrisma<TodoInput>>({
+				data: req.input,
+			})
+		}),
 	updateTodo: publicProcedure
-		.input(todoInputSchema)
-		.mutation(async ({ input }) => {
-			await updateDoc(doc(db, 'todos', input.id), {
-				title: input.title,
-				description: input.description,
-				color: input.color,
-				completed: input.completed,
+		.input(fullTodoSchema.strict() satisfies z.Schema<Todo>)
+		.mutation(async (req) => {
+			await req.ctx.prisma.todo.update({
+				data: req.input,
+				where: {
+					id: req.input.id,
+				},
 			})
 		}),
 	deleteTodo: publicProcedure
 		.input(
 			z
 				.object({
-					id: z.string(),
+					id: z.number(),
 				})
 				.strict()
 		)
-		.mutation(async ({ input }) => {
-			await deleteDoc(doc(db, 'todos', input.id))
+		.mutation(async (req) => {
+			await req.ctx.prisma.todo.delete({
+				where: {
+					id: req.input.id,
+				},
+			})
 		}),
 }

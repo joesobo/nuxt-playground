@@ -34,16 +34,19 @@ const { $client } = useNuxtApp()
 
 const email = ref('')
 const password = ref('')
+const displayName = ref(null)
 const error = ref()
 
 const register = async () => {
 	const result = await $client.createUser.mutate({
 		email: email.value,
 		password: password.value,
+		displayName: displayName.value,
 	})
 
 	if (result.status === 200) {
 		console.log('SUCCESS: ', result.message)
+		window.localStorage.setItem('email', email.value)
 		window.location.href = '/'
 	} else {
 		console.log('ERROR: ', result.message)
