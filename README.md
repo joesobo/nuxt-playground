@@ -3,8 +3,11 @@ Just a little Nuxt playground to connect up to TRPC and Firebase
 Stack:
 
 - Nuxt
+	- icons
+	- vitest
+	- vueuse
 - Vue
-- Tailwind
+- Tailwind / Flowbite
 - TRPC (nuxt)
 - Firebase
 - Zod
