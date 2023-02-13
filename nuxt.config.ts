@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 	build: { transpile: ['trpc-nuxt'] },
 	modules: [
 		'@nuxtjs/tailwindcss',
+		'@nuxt/image-edge',
 		'@nuxtjs/supabase',
 		'nuxt-icon',
 		'nuxt-vitest',

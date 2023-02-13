@@ -14,6 +14,7 @@
 		"prisma:studio": "npx prisma studio"
 	},
 	"devDependencies": {
+		"@nuxt/image-edge": "1.0.0-27919678.2f5b64b",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
 		"@nuxtjs/supabase": "^0.3.1",
 		"@nuxtjs/tailwindcss": "^6.3.1",
