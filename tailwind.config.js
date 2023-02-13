@@ -13,4 +13,5 @@ module.exports = {
 		extend: {},
 	},
 	plugins: [require('flowbite'), require('flowbite-typography')],
+	darkMode: 'class',
 }

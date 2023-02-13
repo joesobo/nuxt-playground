@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 	build: { transpile: ['trpc-nuxt'] },
 	modules: [
 		'@nuxtjs/tailwindcss',
+		'@nuxtjs/color-mode',
 		'@nuxt/image-edge',
 		'@nuxtjs/supabase',
 		'nuxt-icon',
@@ -27,4 +28,5 @@ export default defineNuxtConfig({
 			autoprefixer: {},
 		},
 	},
+	colorMode: { classSuffix: '' },
 })

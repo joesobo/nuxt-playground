@@ -1,9 +1,14 @@
 <template>
 	<div class="mt-2 flex items-center">
-		<p class="m-0">
+		<p class="m-0 text-[#333] dark:text-white">
 			{{ user?.email ?? 'Error' }}
 		</p>
-		<Button class="ml-2" gradient="purple-pink" outline @click="handleSignOut">
+		<Button
+			class="ml-2 text-[#333] dark:text-white"
+			gradient="purple-pink"
+			outline
+			@click="handleSignOut"
+		>
 			Sign Out
 		</Button>
 	</div>
