@@ -18,10 +18,3 @@ model Todo {
   completed   Boolean @default(false)
   email       String
 }
-
-model User {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
-  password    String
-  displayName String?
-}

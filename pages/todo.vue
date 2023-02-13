@@ -122,8 +122,8 @@ const { $client } = useNuxtApp()
 // Fetching Data
 const { data: todos, refresh } = await $client.getTodos.useQuery()
 
-const filterTodos = todos.value?.filter(
-	(todo) => todo.email === user.value?.email
+const filterTodos = computed(() =>
+	todos.value?.filter((todo) => todo.email === user.value?.email)
 )
 
 // Creating Data
