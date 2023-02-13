@@ -1,16 +1,7 @@
-export default defineNuxtRouteMiddleware(async () => {
-	const currentEmail = window.localStorage.email
+export default defineNuxtRouteMiddleware(() => {
+	const user = useSupabaseUser()
 
-	if (!currentEmail) {
-		window.location.href = '/login'
-	}
-
-	const { $client } = useNuxtApp()
-	const { data: user } = await $client.getUser.useQuery({
-		email: currentEmail,
-	})
-
-	if (user.value?.status === 400) {
-		window.location.href = '/login'
+	if (!user.value) {
+		return navigateTo('/login')
 	}
 })

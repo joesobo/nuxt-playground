@@ -16,6 +16,7 @@ model Todo {
   description String?
   color       String?
   completed   Boolean @default(false)
+  email       String
 }
 
 model User {

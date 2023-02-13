@@ -41,7 +41,7 @@
 		<!-- Display -->
 		<div class="mt-8 flex flex-col pl-0">
 			<Card
-				v-for="todo in todos"
+				v-for="todo in filterTodos"
 				:key="todo.id"
 				class="mt-4 w-full max-w-full"
 				:class="
@@ -109,6 +109,8 @@ definePageMeta({
 	middleware: ['auth'],
 })
 
+const user = useSupabaseUser()
+
 // Vue var setup
 const todoTitle = ref('')
 const todoDescription = ref('')
@@ -120,15 +122,24 @@ const { $client } = useNuxtApp()
 // Fetching Data
 const { data: todos, refresh } = await $client.getTodos.useQuery()
 
+const filterTodos = todos.value?.filter(
+	(todo) => todo.email === user.value?.email
+)
+
 // Creating Data
 const addTodo = async () => {
-	await $client.addTodo.mutate({
-		title: todoTitle.value,
-		description: todoDescription.value,
-		completed: todoChecked.value,
-		color: todoColor.value,
-	})
-	refresh()
+	const user = useSupabaseUser()
+
+	if (user.value) {
+		await $client.addTodo.mutate({
+			title: todoTitle.value,
+			description: todoDescription.value,
+			completed: todoChecked.value,
+			color: todoColor.value,
+			email: user.value.email as string,
+		})
+		refresh()
+	}
 }
 
 // Updating Data
@@ -140,6 +151,7 @@ const updateTodo = async (todo: Todo) => {
 		description: todo.description || '',
 		color: todo.color || '#000',
 		completed: todo.completed,
+		email: todo.email,
 	})
 	refresh()
 }

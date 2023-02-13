@@ -9,8 +9,8 @@
 			class="mt-4"
 			aria-label="Password"
 		/>
-		<p v-if="error" class="mt-4 text-red-500">
-			{{ error }}
+		<p v-if="errorMessage" class="mt-4 text-red-500">
+			{{ errorMessage }}
 		</p>
 		<div>
 			<Button class="mt-4" gradient="cyan-blue" @click="login"> Login </Button>
@@ -27,39 +27,27 @@
 import { Button, Input } from 'flowbite-vue'
 import { ref } from 'vue'
 
-const { $client } = useNuxtApp()
+const supabaseClient = useSupabaseClient()
+const user = useSupabaseUser()
 
 const email = ref('')
 const password = ref('')
-const displayName = ref(null)
-const error = ref()
+const errorMessage = ref()
 
 const login = async () => {
-	const result = await $client.loginUser.mutate({
+	const { error } = await supabaseClient.auth.signInWithPassword({
 		email: email.value,
 		password: password.value,
-		displayName: displayName.value,
 	})
 
-	if (result.status === 200) {
-		console.log('SUCCESS: ', result.message)
-		window.localStorage.setItem('email', email.value)
-		window.location.href = '/'
-	} else {
-		switch (result.message) {
-			case 'auth/invalid-email':
-				error.value = 'Invalid email'
-				break
-			case 'auth/user-not-found':
-				error.value = 'No account with that email was found'
-				break
-			case 'auth/wrong-password':
-				error.value = 'Incorrect password'
-				break
-			default:
-				error.value = 'Invalid email or password'
-				break
-		}
-	}
+	errorMessage.value = error?.message
 }
+
+onMounted(() => {
+	watchEffect(async () => {
+		if (user.value) {
+			await navigateTo('/')
+		}
+	})
+})
 </script>

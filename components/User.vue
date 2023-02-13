@@ -12,20 +12,11 @@
 <script setup lang="ts">
 import { Button } from 'flowbite-vue'
 
-const { $client } = useNuxtApp()
-const currentEmail = window.localStorage.email
-
-const { data: user, refresh } = await $client.getUser.useQuery({
-	email: currentEmail,
-})
+const supabaseClient = useSupabaseClient()
+const user = useSupabaseUser()
 
 const handleSignOut = async () => {
-	const result = await $client.logoutUser.mutate({ email: currentEmail })
-	refresh()
-
-	if (result.status === 200) {
-		window.localStorage.removeItem('email')
-		window.location.href = '/login'
-	}
+	await supabaseClient.auth.signOut()
+	navigateTo('/login')
 }
 </script>

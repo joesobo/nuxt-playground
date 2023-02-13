@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	ssr: false,
 	app: {
 		head: {
 			htmlAttrs: {
@@ -13,7 +12,13 @@ export default defineNuxtConfig({
 		},
 	},
 	build: { transpile: ['trpc-nuxt'] },
-	modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', 'nuxt-vitest', '@vueuse/nuxt'],
+	modules: [
+		'@nuxtjs/tailwindcss',
+		'@nuxtjs/supabase',
+		'nuxt-icon',
+		'nuxt-vitest',
+		'@vueuse/nuxt',
+	],
 	css: ['~/assets/css/tailwind.css'],
 	postcss: {
 		plugins: {

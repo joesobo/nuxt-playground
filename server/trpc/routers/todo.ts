@@ -21,6 +21,7 @@ export const todoSchema = z
 			])
 			.nullable(),
 		completed: z.boolean(),
+		email: z.string().email(),
 	})
 	.strict()
 
