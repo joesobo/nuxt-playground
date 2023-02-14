@@ -1,6 +1,6 @@
 <template>
 	<!-- Form -->
-	<div class="flex flex-col">
+	<div ref="wrapperEl" class="flex flex-col">
 		<h1>Todo List</h1>
 		<div class="flex">
 			<!-- Name -->
@@ -28,9 +28,9 @@
 			label="New Todo Description"
 			aria-label="New Todo Description"
 		/>
-		<!-- <p v-if="error" class="mt-2 font-bold text-red-500">
-			{{ error }}
-		</p> -->
+		<p v-if="errorMessage" class="mt-2 font-bold text-red-500">
+			{{ errorMessage }}
+		</p>
 		<div class="mt-2 flex">
 			<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
 			<Button
@@ -103,6 +103,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAutoAnimate } from '@formkit/auto-animate/vue'
 import type { Todo } from '@prisma/client'
 import { Button, TheCard as Card, Input } from 'flowbite-vue'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
@@ -116,12 +117,15 @@ definePageMeta({
 
 const user = useSupabaseUser()
 
+const [wrapperEl] = useAutoAnimate()
+
 // Vue var setup
 const todoTitle = ref('')
 const todoDescription = ref('')
 const todoColor = ref('#000')
 const todoChecked = ref(false)
 const storeTodo: Ref<Todo | undefined> = ref(undefined)
+const errorMessage = ref('')
 
 const { $client } = useNuxtApp()
 // Fetching Data
@@ -136,14 +140,32 @@ const addTodo = async () => {
 	const user = useSupabaseUser()
 
 	if (user.value) {
-		await $client.addTodo.mutate({
-			title: todoTitle.value,
-			description: todoDescription.value,
-			completed: todoChecked.value,
-			color: todoColor.value,
-			email: user.value.email as string,
-		})
-		refresh()
+		try {
+			await $client.addTodo.mutate({
+				title: todoTitle.value,
+				description: todoDescription.value,
+				completed: todoChecked.value,
+				color: todoColor.value,
+				email: user.value.email as string,
+			})
+
+			refresh()
+		} catch (error) {
+			if (error instanceof Error) {
+				const code = JSON.parse(error.message)[0].code
+
+				switch (code) {
+					case 'too_small':
+						errorMessage.value =
+							'Title is too small. Must contain at least 3 character(s)'
+						break
+					default:
+						console.log('JOE ADD THIS TO THE TODO.VUE FILE: ' + code)
+						errorMessage.value = 'Something went wrong'
+						break
+				}
+			}
+		}
 	}
 }
 

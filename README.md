@@ -1,6 +1,7 @@
 Just a little Nuxt playground to connect up to TRPC, Supabase, and Prisma
 
 Stack:
+
 - Nuxt
   - icons
   - vitest
@@ -13,4 +14,5 @@ Stack:
 - Zod
 
 TODO:
+
 - Document with Excalidraw

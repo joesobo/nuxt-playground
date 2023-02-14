@@ -10,7 +10,7 @@ export const todoSchema = z
 		title: z
 			.string({
 				required_error: 'Title is required',
-				invalid_type_error: 'Title must be at least 3 characters',
+				too_short: 'Title must be at least 3 characters',
 			})
 			.min(3),
 		description: z.string().max(50).nullable(),
