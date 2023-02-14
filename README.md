@@ -13,6 +13,7 @@ TESTING
 - Vitest
 - Testing Library
 - Playwright
+- CircleCI
 
 BACKEND
 
@@ -23,6 +24,10 @@ BACKEND
 DATABASE
 
 - Supabase
+
+DEPLOY
+
+- Vercel
 
 TODO:
 
