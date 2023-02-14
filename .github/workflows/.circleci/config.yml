@@ -72,6 +72,31 @@ jobs:
           name: 'Run unit tests'
           command: pnpm test
 
+  e2e:
+    executors:
+      pw-focal-development:
+        docker:
+          - image: mcr.microsoft.com/playwright:v1.30.0-focal
+
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Start playground local development server
+          command: pnpm dev
+          background: true
+
+       - run:
+          name: Wait for server to start
+          command: npx wait-on --timeout=60000 http://localhost:3000
+
+      - run:
+          name: Run integration tests
+          command: pnpm e2e
+
 workflows:
   test-and-build:
     jobs:
@@ -87,5 +112,9 @@ workflows:
             - build
 
       - test:
+          requires:
+            - build
+
+      - e2e:
           requires:
             - build
