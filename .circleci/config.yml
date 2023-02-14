@@ -83,6 +83,11 @@ jobs:
           at: .
 
       - run:
+          name: Start playground local development server
+          command: pnpm dev
+          background: true
+
+      - run:
           name: Run integration tests
           command: pnpm e2e
 
