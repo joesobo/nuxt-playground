@@ -89,6 +89,10 @@ jobs:
           background: true
 
       - run:
+          name: Wait for server to start
+          command: npx wait-on --timeout=60000 http://localhost:3000
+
+      - run:
           name: Run integration tests
           command: pnpm e2e
 
