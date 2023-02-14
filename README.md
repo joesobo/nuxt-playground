@@ -2,16 +2,23 @@ Just a little Nuxt playground to connect up to TRPC, Supabase, and Prisma
 
 Stack:
 
+FRONTEND
 - Nuxt
-  - icons
-  - vitest
-  - vueuse
 - Vue
 - Tailwind / Flowbite
+
+TESTING
+- Vitest
+- Testing Library
+- Playwright
+
+BACKEND
 - TRPC (nuxt)
-- Supabase
 - Prisma
 - Zod
+
+DATABASE
+- Supabase
 
 TODO:
 
