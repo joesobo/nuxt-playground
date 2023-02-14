@@ -74,7 +74,12 @@ jobs:
 
   e2e:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.30.0-focal
+      - image: cimg/node:19.5.0
+
+    executors:
+      pw-focal-development:
+        docker:
+          - image: mcr.microsoft.com/playwright:v1.30.0-focal
 
     steps:
       - checkout
