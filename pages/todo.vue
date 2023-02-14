@@ -35,7 +35,6 @@
 			<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
 			<Button
 				gradient="purple-pink"
-				outline
 				class="ml-2 text-[#333] dark:text-white"
 				@click="resetForm"
 			>
