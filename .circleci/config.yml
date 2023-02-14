@@ -81,7 +81,7 @@ jobs:
 
       - run:
           name: Install
-          command: pnpm i -D @playwright/test && npx playwright install --with-deps
+          command: npm install -g pnpm && pnpm i -D @playwright/test && npx playwright install --with-deps
 
       - run:
           name: Start playground local development server
