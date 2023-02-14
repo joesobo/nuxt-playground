@@ -74,7 +74,7 @@ jobs:
 
   e2e:
     docker:
-      - image: cimg/node:19.5.0
+       - image: mcr.microsoft.com/playwright:v1.30.0-focal
 
     steps:
       - checkout
@@ -83,9 +83,17 @@ jobs:
           at: .
 
       - run:
+          name: Install
+          command: pnpm i -D @playwright/test && npx playwright install --with-deps
+
+      - run:
           name: Start playground local development server
           command: pnpm dev
           background: true
+
+       - run:
+          name: Wait for server to start
+          command: npx wait-on --timeout=60000 http://localhost:3000
 
       - run:
           name: Run integration tests
