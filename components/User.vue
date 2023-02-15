@@ -1,5 +1,5 @@
 <template>
-	<div class="mt-2 flex items-center">
+	<div class="flex items-center justify-center">
 		<p class="m-0 text-[#333] dark:text-white">
 			{{ user?.email ?? 'Error' }}
 		</p>

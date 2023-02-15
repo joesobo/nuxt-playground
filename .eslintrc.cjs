@@ -19,6 +19,7 @@ module.exports = {
 	rules: {
 		'linebreak-style': ['error', 'unix'],
 		'vue/multi-word-component-names': 'off',
+		'vue/attribute-hyphenation': 'off',
 		'zod/prefer-enum': 'error',
 		'zod/require-strict': 'error',
 		'prettier/prettier': [
