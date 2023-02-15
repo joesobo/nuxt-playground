@@ -4,7 +4,7 @@
 			<Icon name="uil:home" size="32" class="text-[#333] dark:text-white" />
 			<h1 class="ml-4 mb-0">Welcome Home!</h1>
 		</div>
-		<p>
+		<p class="text-gray-900 dark:text-white">
 			This is a small introductory Fullstack application for me to try out a few
 			new technologies.
 		</p>
