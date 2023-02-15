@@ -9,7 +9,13 @@
 			new technologies.
 		</p>
 
-		<NuxtImg preload src="/lighthouse.png" sizes="sm:100vw md:50vw lg:400px" />
+		<NuxtImg
+			preload
+			src="/lighthouse.png"
+			alt="Lighthouse"
+			width="sm:100vw md:50vw lg:400px"
+			height="sm:100vw md:50vw lg:400px"
+		/>
 
 		<h2
 			class="mb-2 text-lg font-semibold text-gray-900 underline dark:text-white"
@@ -18,31 +24,31 @@
 		</h2>
 
 		<ul class="w-full max-w-lg text-gray-500 dark:text-gray-400">
-			<h3 class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
+			<li class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
 				Frontend:
-			</h3>
+			</li>
 			<ListItem label="Nuxt.js" active />
 			<ListItem label="Vue 3" active />
 			<ListItem label="TailwindCSS / Flowbite" active />
 
-			<h3 class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
+			<li class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
 				Testing:
-			</h3>
+			</li>
 			<ListItem label="Vitest" active />
 			<ListItem label="Testing Library" active />
 			<ListItem label="Playwright" active />
 			<ListItem label="CircleCI" active />
 
-			<h3 class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
+			<li class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
 				Backend:
-			</h3>
+			</li>
 			<ListItem label="TRPC (Nuxt)" active />
 			<ListItem label="Prisma" active />
 			<ListItem label="Zod" active />
 
-			<h3 class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
+			<li class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
 				Database / Deploy:
-			</h3>
+			</li>
 			<ListItem label="Supabase" active />
 			<ListItem label="Vercel" active />
 		</ul>
