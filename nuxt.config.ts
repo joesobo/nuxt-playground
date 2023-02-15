@@ -1,3 +1,5 @@
+import { apiPlugin } from '@storyblok/vue'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	app: {
@@ -14,6 +16,15 @@ export default defineNuxtConfig({
 	build: { transpile: ['trpc-nuxt'] },
 	modules: [
 		'@nuxtjs/tailwindcss',
+		'@nuxtjs/i18n',
+		[
+			'@storyblok/nuxt',
+			{
+				accessToken: process.env.STORYBLOK_API_TOKEN,
+				apiOptions: { region: 'us' },
+				use: [apiPlugin],
+			},
+		],
 		'@nuxtjs/color-mode',
 		'@nuxt/image-edge',
 		'@nuxtjs/supabase',
@@ -29,4 +40,12 @@ export default defineNuxtConfig({
 		},
 	},
 	colorMode: { classSuffix: '' },
+	i18n: {
+		locales: [
+			{ code: 'en', name: 'English' },
+			{ code: 'en-gb', name: 'English (UK)' },
+			{ code: 'es', name: 'Spanish' },
+		],
+		defaultLocale: 'en',
+	},
 })

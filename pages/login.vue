@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-col">
-		<h1>Login</h1>
+		<StoryblokComponent v-if="story" :blok="story.content" />
 
 		<LongCard>
 			<Input
@@ -36,10 +36,17 @@
 <script setup lang="ts">
 import { Button, Input } from 'flowbite-vue'
 import { ref } from 'vue'
-import LongCard from '~~/components/LongCard.vue'
+import LongCard from '~/components/LongCard.vue'
 
 const supabaseClient = useSupabaseClient()
 const user = useSupabaseUser()
+
+const { locale } = useI18n()
+
+const story = await useAsyncStoryblok('login', {
+	version: 'draft',
+	language: locale.value,
+})
 
 const email = ref('')
 const password = ref('')

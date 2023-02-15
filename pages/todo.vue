@@ -114,8 +114,8 @@ import type { Todo } from '@prisma/client'
 import { Button, Input } from 'flowbite-vue'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
 import Checkbox from '~/components/Checkbox.vue'
-import LongCard from '~~/components/LongCard.vue'
 import Textarea from '~/components/Textarea.vue'
+import LongCard from '~~/components/LongCard.vue'
 
 definePageMeta({
 	layout: 'user',

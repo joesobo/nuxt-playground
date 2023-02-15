@@ -8,6 +8,23 @@
 
 		<template v-if="showMenu" #default="{ isShowMenu }">
 			<NavbarCollapse :is-show-menu="isShowMenu">
+				<li
+					v-for="{ code, name } in locales as LocaleObject[]"
+					:key="code"
+					class="flex h-[36px] items-center justify-center"
+				>
+					<NuxtLink
+						:to="switchLocalePath(code)"
+						:class="
+							locale === code
+								? 'text-white dark:text-white md:text-blue-700'
+								: 'dark:text-[#666]'
+						"
+					>
+						{{ name }}
+					</NuxtLink>
+				</li>
+
 				<li class="flex h-[36px] items-center justify-center">
 					<button
 						class="!outline-none"
@@ -28,7 +45,9 @@
 					<NuxtLink
 						class="flex h-[36px] items-center justify-center rounded py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
 						:class="
-							path === '/' ? 'text-white dark:text-white md:text-blue-700' : ''
+							!path.includes('/todo')
+								? 'text-white dark:text-white md:text-blue-700'
+								: ''
 						"
 						to="/"
 						>Home</NuxtLink
@@ -38,7 +57,7 @@
 					<NuxtLink
 						class="flex h-[36px] items-center justify-center rounded py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
 						:class="
-							path === '/todo'
+							path.includes('/todo')
 								? 'text-white dark:text-white md:text-blue-700'
 								: ''
 						"
@@ -56,7 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import { Navbar, NavbarLogo, NavbarCollapse } from 'flowbite-vue'
+import { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
+import { Navbar, NavbarCollapse, NavbarLogo } from 'flowbite-vue'
 import { useRouter } from 'vue-router'
 import LazyUser from '~/components/User.vue'
 
@@ -64,6 +84,9 @@ const router = useRouter()
 const path = computed(() => router.currentRoute.value.path)
 
 const color = useColorMode()
+
+const { locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 
 defineProps({
 	showMenu: {

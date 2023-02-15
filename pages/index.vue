@@ -1,8 +1,12 @@
 <template>
 	<div class="my-4 flex flex-col items-center justify-center">
 		<div class="flex items-center">
-			<Icon name="uil:home" size="32" class="text-[#333] dark:text-white" />
-			<h1 class="ml-4 mb-0">Welcome Home!</h1>
+			<Icon
+				name="uil:home"
+				size="32"
+				class="mr-4 mb-8 text-[#333] dark:text-white"
+			/>
+			<StoryblokComponent v-if="story" :blok="story.content" />
 		</div>
 		<p class="text-gray-900 dark:text-white">
 			This is a small introductory Fullstack application for me to try out a few
@@ -59,5 +63,12 @@
 definePageMeta({
 	layout: 'user',
 	middleware: ['auth'],
+})
+
+const { locale } = useI18n()
+
+const story = await useAsyncStoryblok('home', {
+	version: 'draft',
+	language: locale.value,
 })
 </script>
