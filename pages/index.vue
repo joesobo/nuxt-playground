@@ -51,10 +51,27 @@
 			<ListItem label="Zod" active />
 
 			<li class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
-				Database / Deploy:
+				Database / Deploy / CMS:
 			</li>
 			<ListItem label="Supabase" active />
 			<ListItem label="Vercel" active />
+			<ListItem label="Storyblok" active />
+		</ul>
+
+		<h2
+			class="mb-2 text-lg font-semibold text-gray-900 underline dark:text-white"
+		>
+			Features:
+		</h2>
+
+		<ul class="w-full max-w-lg text-gray-500 dark:text-gray-400">
+			<ListItem label="I18n" active />
+			<ListItem label="Images" active />
+			<ListItem label="Icons" active />
+			<ListItem label="CMS" active />
+			<ListItem label="Authentication" active />
+			<ListItem label="Dark Mode" active />
+			<ListItem label="SEO" active />
 		</ul>
 	</div>
 </template>

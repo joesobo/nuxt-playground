@@ -1,6 +1,6 @@
 Just a little Nuxt playground to connect up to TRPC, Supabase, and Prisma
 
-Stack:
+# Stack:
 
 FRONTEND
 
@@ -25,6 +25,10 @@ DATABASE
 
 - Supabase
 
+CMS
+
+- Storyblok
+
 DEPLOY
 
 - Vercel
@@ -32,3 +36,11 @@ DEPLOY
 TODO:
 
 - Document with Excalidraw
+
+# Dev:
+
+1. `pnpm i`
+2. Fill out `.env`
+3. `pnpm prisma:generate`
+4. `pnpm dev`
+5. Storyblok - `pnpm dev:https` in a separate terminal
