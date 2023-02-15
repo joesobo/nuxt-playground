@@ -49,7 +49,7 @@
 								? 'text-white dark:text-white md:text-blue-700'
 								: ''
 						"
-						to="/"
+						:to="localePath('/')"
 						>Home</NuxtLink
 					>
 				</li>
@@ -61,7 +61,7 @@
 								? 'text-white dark:text-white md:text-blue-700'
 								: ''
 						"
-						to="/todo"
+						:to="localePath('/todo')"
 						>Todo</NuxtLink
 					>
 				</li>
@@ -87,6 +87,7 @@ const color = useColorMode()
 
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
 
 defineProps({
 	showMenu: {
