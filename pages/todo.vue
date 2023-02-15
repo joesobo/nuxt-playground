@@ -1,50 +1,57 @@
 <template>
-	<!-- Form -->
 	<div ref="wrapperEl" class="flex flex-col">
 		<h1>Todo List</h1>
-		<div class="flex">
-			<!-- Name -->
-			<Input
-				v-model="todoTitle"
-				class="w-full"
-				aria-label="New Todo Title"
-				placeholder="Todo Title"
+
+		<LongCard>
+			<!-- Form -->
+			<div class="flex">
+				<!-- Name -->
+				<Input
+					v-model="todoTitle"
+					class="w-full"
+					aria-label="New Todo Title"
+					placeholder="Todo Title"
+				/>
+				<!-- Color -->
+				<input
+					v-model="todoColor"
+					class="ml-2 h-10 w-10 rounded border-4 border-solid border-white"
+					type="color"
+					aria-label="New Todo Color"
+				/>
+				<!-- Todo State -->
+				<Checkbox
+					v-model="todoChecked"
+					class="ml-2"
+					label="New Todo Checkbox"
+				/>
+			</div>
+			<!-- Description -->
+			<Textarea
+				v-model="todoDescription"
+				class="mt-2"
+				placeholder="Add a description"
+				label="New Todo Description"
+				aria-label="New Todo Description"
 			/>
-			<!-- Color -->
-			<input
-				v-model="todoColor"
-				class="ml-2 h-10 w-10 rounded border-4 border-solid border-white"
-				type="color"
-				aria-label="New Todo Color"
-			/>
-			<!-- Todo State -->
-			<Checkbox v-model="todoChecked" class="ml-2" label="New Todo Checkbox" />
-		</div>
-		<!-- Description -->
-		<Textarea
-			v-model="todoDescription"
-			class="mt-2"
-			placeholder="Add a description"
-			label="New Todo Description"
-			aria-label="New Todo Description"
-		/>
-		<p v-if="errorMessage" class="mt-2 font-bold text-red-500">
-			{{ errorMessage }}
-		</p>
-		<div class="mt-2 flex">
-			<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
-			<Button
-				gradient="purple-pink"
-				class="ml-2 text-[#333] dark:text-white"
-				@click="resetForm"
-			>
-				Clear
-			</Button>
-		</div>
+			<p v-if="errorMessage" class="mt-2 font-bold text-red-500">
+				{{ errorMessage }}
+			</p>
+			<div class="mt-2 flex">
+				<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
+				<Button
+					gradient="purple-pink"
+					class="ml-2 text-[#333] dark:text-white"
+					@click="resetForm"
+				>
+					Clear
+				</Button>
+			</div>
+		</LongCard>
 
 		<!-- Display -->
 		<div class="mt-8 flex flex-col pl-0">
-			<Card
+			<LongCard
 				v-for="todo in filterTodos"
 				:key="todo.id"
 				class="mt-4 w-full max-w-full"
@@ -96,7 +103,7 @@
 						@change="updateTodo(todo)"
 					/>
 				</div>
-			</Card>
+			</LongCard>
 		</div>
 	</div>
 </template>
@@ -104,9 +111,10 @@
 <script setup lang="ts">
 import { useAutoAnimate } from '@formkit/auto-animate/vue'
 import type { Todo } from '@prisma/client'
-import { Button, TheCard as Card, Input } from 'flowbite-vue'
+import { Button, Input } from 'flowbite-vue'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
 import Checkbox from '~/components/Checkbox.vue'
+import LongCard from '~~/components/LongCard.vue'
 import Textarea from '~/components/Textarea.vue'
 
 definePageMeta({

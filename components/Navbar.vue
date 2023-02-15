@@ -1,11 +1,7 @@
 <template>
 	<Navbar solid>
 		<template #logo>
-			<NavbarLogo
-				link="http:localhost:3000/"
-				alt="Joe's Logo"
-				image-url="lighthouse.png"
-			>
+			<NavbarLogo link="/" alt="Joe's Logo" image-url="lighthouse.png">
 				<p class="text-[#333] dark:text-white">Fullstack Playground</p>
 			</NavbarLogo>
 		</template>
