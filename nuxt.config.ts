@@ -1,3 +1,5 @@
+import '@total-typescript/ts-reset'
+
 import { apiPlugin } from '@storyblok/vue'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
