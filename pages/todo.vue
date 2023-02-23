@@ -20,7 +20,7 @@
 					aria-label="New Todo Color"
 				/>
 				<!-- Todo State -->
-				<Checkbox
+				<CheckboxInput
 					v-model="todoChecked"
 					class="ml-2"
 					label="New Todo Checkbox"
@@ -38,14 +38,13 @@
 				{{ errorMessage }}
 			</p>
 			<div class="mt-2 flex">
-				<Button gradient="cyan-blue" @click="addTodo"> Add </Button>
+				<Button label="Add" gradient="cyan-blue" @click="addTodo" />
 				<Button
+					label="Clear"
 					gradient="purple-pink"
 					class="ml-2 text-[#333] dark:text-white"
 					@click="resetForm"
-				>
-					Clear
-				</Button>
+				/>
 			</div>
 		</LongCard>
 
@@ -66,7 +65,7 @@
 			>
 				<div class="flex justify-between">
 					<div class="flex">
-						<Checkbox
+						<CheckboxInput
 							v-model="todo.completed"
 							:label="`Todo Checkbox ${todo.id}`"
 							@change="updateTodo(todo)"
@@ -109,11 +108,12 @@
 </template>
 
 <script setup lang="ts">
+import { CheckboxInput } from '@poleski/checkbox-input'
+import { Button } from '@poleski/button'
 import { useAutoAnimate } from '@formkit/auto-animate/vue'
 import type { Todo } from '@prisma/client'
-import { Button, Input } from 'flowbite-vue'
+import { Input } from 'flowbite-vue'
 import { pickTextColorBasedOnBgColorAdvanced } from '../utils/colorPicker'
-import Checkbox from '~/components/Checkbox.vue'
 import Textarea from '~/components/Textarea.vue'
 import LongCard from '~~/components/LongCard.vue'
 
@@ -159,7 +159,7 @@ const addTodo = async () => {
 			refresh()
 		} catch (error) {
 			if (error instanceof Error) {
-				const code = JSON.parse(error.message)[0].code
+				const code = (JSON.parse(error.message) as any)[0].code
 
 				switch (code) {
 					case 'too_small':

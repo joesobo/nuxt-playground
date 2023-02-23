@@ -64,6 +64,8 @@
 	},
 	"dependencies": {
 		"@formkit/auto-animate": "1.0.0-beta.6",
+		"@poleski/button": "^1.0.3",
+		"@poleski/checkbox-input": "^1.0.0",
 		"@prisma/client": "^4.10.1",
 		"@trpc/client": "^10.11.0",
 		"@trpc/server": "^10.11.0",

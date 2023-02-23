@@ -20,9 +20,12 @@
 				{{ errorMessage }}
 			</p>
 			<div>
-				<Button class="mt-4" gradient="cyan-blue" @click="register">
-					Register
-				</Button>
+				<Button
+					label="Register"
+					class="mt-4"
+					gradient="cyan-blue"
+					@click="register"
+				/>
 			</div>
 			<a
 				href="/login"
@@ -35,7 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Input } from 'flowbite-vue'
+import { Button } from '@poleski/button'
+import { Input } from 'flowbite-vue'
 import { ref } from 'vue'
 import LongCard from '~/components/LongCard.vue'
 

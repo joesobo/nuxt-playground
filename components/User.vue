@@ -3,14 +3,18 @@
 		<p class="m-0 text-[#333] dark:text-white">
 			{{ user?.email ?? 'Error' }}
 		</p>
-		<Button class="ml-2" gradient="purple-pink" @click="handleSignOut">
-			Sign Out
-		</Button>
+		<Button
+			label="Sign Out"
+			class="ml-2"
+			size="sm"
+			gradient="purple-pink"
+			@click="handleSignOut"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { Button } from 'flowbite-vue'
+import { Button } from '@poleski/button'
 
 const supabaseClient = useSupabaseClient()
 const user = useSupabaseUser()
